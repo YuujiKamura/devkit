@@ -1,0 +1,22 @@
+# Standalone Docker Compose for quick container-based dev
+# Usage: docker compose -f docker/docker-compose.yml up -d
+# Then:  docker compose -f docker/docker-compose.yml exec dev bash
+
+services:
+  dev:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    volumes:
+      - ..:/workspace:cached
+      - devkit-go-cache:/home/vscode/go
+      - devkit-cargo-cache:/home/vscode/.cargo
+    working_dir: /workspace
+    command: sleep infinity
+    environment:
+      - GOPATH=/home/vscode/go
+      - CARGO_HOME=/home/vscode/.cargo
+
+volumes:
+  devkit-go-cache:
+  devkit-cargo-cache:

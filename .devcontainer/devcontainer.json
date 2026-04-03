@@ -1,0 +1,24 @@
+{
+    "name": "YuujiKamura Dev",
+    "build": {
+        "dockerfile": "../docker/Dockerfile.dev"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/devcontainers/features/rust:1": {},
+        "ghcr.io/devcontainers/features/go:1": {
+            "version": "latest"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "golang.go",
+                "rust-lang.rust-analyzer",
+                "ziglang.vscode-zig"
+            ]
+        }
+    },
+    "postCreateCommand": "bash .devcontainer/post-create.sh",
+    "remoteUser": "vscode"
+}
