@@ -18,6 +18,23 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# --- Enable Developer Mode (required for symlink support in Zig builds) ---
+$devModeKey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
+$devMode = (Get-ItemProperty -Path $devModeKey -Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue).AllowDevelopmentWithoutDevLicense
+if ($devMode -ne 1) {
+    Write-Host "[SETUP] Enabling Developer Mode (required for symlink support)..." -ForegroundColor Cyan
+    try {
+        Set-ItemProperty -Path $devModeKey -Name AllowDevelopmentWithoutDevLicense -Value 1 -Force
+        Set-ItemProperty -Path $devModeKey -Name AllowAllTrustedApps -Value 1 -Force
+        Write-Host "[OK] Developer Mode enabled" -ForegroundColor Green
+    } catch {
+        Write-Host "[WARN] Could not enable Developer Mode. Enable manually: Settings > Update & Security > For Developers > Developer Mode" -ForegroundColor Yellow
+    }
+} else {
+    Write-Host "[SKIP] Developer Mode already enabled" -ForegroundColor DarkGray
+}
+Write-Host ""
+
 function Install-Tool {
     param([string]$Id, [string]$Name, [string]$Override)
 
