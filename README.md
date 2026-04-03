@@ -10,6 +10,14 @@ YuujiKamura プロジェクト群の開発環境セットアップ。
 | Dev Container / Codespaces | Go, Rust, Zig (Linux) | 2-3分 |
 | Docker Compose | ローカル Linux コンテナ | 2-3分 |
 
+## 前提条件
+
+| 方法 | 必要なもの |
+|------|-----------|
+| `setup-dev.ps1` | Windows 10/11, PowerShell 5.1+, 管理者権限 |
+| Dev Container / Codespaces | GitHub アカウント, ブラウザ (または VS Code + Dev Containers 拡張) |
+| Docker Compose | Docker Desktop (Windows/macOS) または Docker Engine (Linux) |
+
 ## 1. Windows ネイティブ (setup-dev.ps1)
 
 ```powershell
@@ -44,10 +52,19 @@ docker compose -f docker/docker-compose.yml exec dev bash
 
 ## 対象プロジェクト
 
-| リポ | 言語 | Windows ネイティブ必須 |
-|------|------|----------------------|
-| ghostty (fork) | Zig | Yes (WinUI3 ビルド) |
-| deckpilot | Go | No |
-| control-plane-server | Rust | No |
-| zig-control-plane | Zig | No |
-| win-zig-bindgen | Zig | Yes |
+| リポ | 言語 | 概要 | Windows ネイティブ必須 |
+|------|------|------|----------------------|
+| [ghostty (fork)](https://github.com/YuujiKamura/ghostty) | Zig | GPU ターミナルエミュレータ (WinUI3 対応) | Yes |
+| [deckpilot](https://github.com/YuujiKamura/deckpilot) | Go | Stream Deck プラグイン | No |
+| [control-plane-server](https://github.com/YuujiKamura/control-plane-server) | Rust | コントロールプレーン API サーバ | No |
+| [zig-control-plane](https://github.com/YuujiKamura/zig-control-plane) | Zig | コントロールプレーン Zig クライアント | No |
+| [win-zig-bindgen](https://github.com/YuujiKamura/win-zig-bindgen) | Zig | WinMD → Zig COM バインディング生成 | Yes |
+
+## トラブルシューティング
+
+| 症状 | 原因 | 対処 |
+|------|------|------|
+| `setup-dev.ps1` が実行できない | ExecutionPolicy でブロック | `Set-ExecutionPolicy Bypass -Scope Process` を先に実行 |
+| Docker Compose でポート衝突 | ホスト側で同じポートが使用中 | `docker compose down` 後、競合プロセスを停止してから再実行 |
+| Codespaces でビルドが遅い | デフォルトの 2-core マシン | Codespace 作成時に 4-core 以上を選択 |
+| Zig ビルドで DLL が見つからない | prebuilt ファイル未取得 | `git submodule update --init` を実行 |
