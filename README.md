@@ -12,20 +12,20 @@ YuujiKamura プロジェクト群の開発環境セットアップ。
 
 ## 1. Windows ネイティブ (setup-dev.ps1)
 
-Ghostty WinUI3 のビルドを含む全ツールチェーン。
-
 ```powershell
 # 最小構成 (Go + gh + git — deckpilot 開発向け)
 powershell -ExecutionPolicy Bypass -File scripts/setup-dev.ps1 -Minimal
 
-# 拡張構成 (+ Zig + Rust + Python)
+# 標準構成 (+ Zig + Rust + Python — ghostty ビルド含む)
 powershell -ExecutionPolicy Bypass -File scripts/setup-dev.ps1
 
-# フル構成 (+ VS Build Tools + .NET SDK — ghostty ビルド向け)
+# フル構成 (+ VS Build Tools + .NET SDK — XAML 変更時のみ必要)
 powershell -ExecutionPolicy Bypass -File scripts/setup-dev.ps1 -Full
 ```
 
 管理者権限が必要。
+
+**Ghostty は標準構成（Zig のみ）でビルドできる。** リポに同梱された prebuilt XBF/PRI/DLL を使うため VS は不要。VS Build Tools が必要になるのは XAML ファイル自体を変更するときだけ。
 
 ## 2. GitHub Codespaces (推奨: ブラウザだけで開発)
 

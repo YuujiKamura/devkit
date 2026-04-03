@@ -53,9 +53,9 @@ if ($Minimal) {
 
 # --- Extended tools ---
 Write-Host "`n--- Extended Tools ---" -ForegroundColor White
-Install-Tool "zig.zig"              "Zig"
-Install-Tool "Rustlang.Rustup"      "Rust (rustup)"
-Install-Tool "Python.Python.3.12"   "Python 3.12"
+Install-Tool "zig.zig"              "Zig"              # ghostty ビルド可 (prebuilt モード)
+Install-Tool "Rustlang.Rustup"      "Rust (rustup)"    # control-plane-server
+Install-Tool "Python.Python.3.12"   "Python 3.12"      # manifest 管理等
 
 if (-not $Full -and -not $All) {
     Write-Host "`nExtended setup complete. Run with -Full to also install VS Build Tools." -ForegroundColor Green
